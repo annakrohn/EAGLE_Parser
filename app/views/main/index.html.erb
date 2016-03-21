@@ -1,0 +1,17 @@
+<h1>EAGLE Database Parser</h1>
+
+<p>This search will produce results from the title and description fields of records in the EAGLE database. After the search has retrieved the EAGLE records, it will allow for various methods of analysis of the data. To search on multiple terms join with logical operators, e.g. "coin OR drachma".S</p>
+
+<%= form_for :results, url: results_path do |f| %>
+	<p>
+    <%= f.label "Search Terms" %><br>
+    <%= f.text_field :search_terms %>
+  </p>
+ 
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+
+<h2>Previous Searches</h2>
+
