@@ -11,14 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160319213713) do
+ActiveRecord::Schema.define(version: 20160328013321) do
 
   create_table "results", force: true do |t|
+    t.integer  "queryTerms"
     t.string   "title"
     t.string   "entityType"
+    t.string   "source"
+    t.string   "sourceUrl"
+    t.string   "tmId"
+    t.integer  "notBeforeDate"
+    t.integer  "notAfterDate"
+    t.string   "period"
+    t.string   "findRomanProvence"
+    t.string   "findAncientSpot"
+    t.string   "findModernSpot"
+    t.string   "findModernCountry"
+    t.string   "findModernRegion"
+    t.string   "findModerProvence"
+    t.string   "inscriptionType"
+    t.string   "objectType"
+    t.string   "material"
+    t.text     "transcription"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "results", ["queryTerms"], name: "query_key_idx", using: :btree
 
   create_table "terms", force: true do |t|
     t.string   "query_terms"
