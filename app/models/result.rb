@@ -1,12 +1,14 @@
 class Result < ActiveRecord::Base
 	extend Parser
 
-	
+	#stores all of the information retrieved from the EAGLE API
   
 	def self.eagle_search(params)
 		
-		Result.get_and_parse(params[:search_terms])
-
+		results = Result.get_results(params[:search_terms])
+		t.children.each do |record|
+			Result.parse_result(record)
+		end
 	end
 
 end

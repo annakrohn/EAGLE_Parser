@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160328013321) do
+ActiveRecord::Schema.define(version: 20160329004952) do
 
   create_table "results", force: true do |t|
     t.integer  "queryTerms"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20160328013321) do
     t.text     "transcription"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "description"
   end
 
   add_index "results", ["queryTerms"], name: "query_key_idx", using: :btree
