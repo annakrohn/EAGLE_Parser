@@ -69,41 +69,41 @@ module Parser
     #take care of query terms seperately (own table)
 
     db = Hash.new
-    db["title"] = record.search(".//title").content if record.search(".//title")
-    db["entityType"] = record.search(".//entityType").content if record.search(".//entityType")
+    db[:title] = record.search(".//title").content if record.search(".//title")
+    db[:entityType] = record.search(".//entityType").content if record.search(".//entityType")
     
     source_info = record.search(".//recordSourceInfo")
     if source_info
-     	db["source"] = source_info.attribute("providerName").value
-     	db["sourceUrl"] = source_info.attribute("landingPage").value
+     	db[:source] = source_info.attribute("providerName").value
+     	db[:sourceUrl] = source_info.attribute("landingPage").value
     end
     
-    db["tmId"] = source.search(".//tmId").content if source.search(".//tmId")
+    db[:tmId] = source.search(".//tmId").content if source.search(".//tmId")
     
     date_info = record.search(".//originDating")
     if date_info
-     	db["notBeforeDate"] = date_info.attribute("notBefore").value
-     	db["notAfterDate"] = date_info.attribute("notAfter").value
-     	db["period"] = date_info.attribute("period").value
+     	db[:notBeforeDate] = date_info.attribute("notBefore").value
+     	db[:notAfterDate] = date_info.attribute("notAfter").value
+     	db[:period] = date_info.attribute("period").value
   	end
 
-  	db["findRomanProvence"] = record.search(".//romanProvinceItalicRegion").content if record.search(".//romanProvinceItalicRegion")
-  	db["findAncientSpot"] = record.search(".//ancientFindSpot").content if record.search(".//ancientFindSpot")
-  	db["findModernSpot"] = record.search(".//modernFindSpot").content if record.search(".//modernFindSpot")
-  	db["findModernCountry"] = record.search(".//modernCountry").content if record.search(".//modernCountry")
-  	db["findModernRegion"] = record.search(".//modernRegion").content if record.search(".//modernRegion")
-  	db["findModerProvence"] = record.search(".//modernProvence").content if record.search(".//modernProvence")
+  	db[:findRomanProvence] = record.search(".//romanProvinceItalicRegion").content if record.search(".//romanProvinceItalicRegion")
+  	db[:findAncientSpot] = record.search(".//ancientFindSpot").content if record.search(".//ancientFindSpot")
+  	db[:findModernSpot] = record.search(".//modernFindSpot").content if record.search(".//modernFindSpot")
+  	db[:findModernCountry] = record.search(".//modernCountry").content if record.search(".//modernCountry")
+  	db[:findModernRegion] = record.search(".//modernRegion").content if record.search(".//modernRegion")
+  	db[:findModerProvence] = record.search(".//modernProvence").content if record.search(".//modernProvence")
 
   	i_types = []
   	record.search(".//inscriptionType").each do |type|
   		i_types << type.content
   	end
-  	db["inscriptionType"] = i_types.join(';')
+  	db[:inscriptionType] = i_types.join(';')
   	
-  	db["objectType"] = record.search(".//objectType").content if record.search(".//objectType")
-  	db["material"] = record.search(".//material").content if record.search(".//material")
-  	db["transcription"] = record.search(".//transcription/text").content if record.search(".//transcription/text")
-  	db["description"] = record.search(".//description").content if record.search(".//description")
+  	db[:objectType] = record.search(".//objectType").content if record.search(".//objectType")
+  	db[:material] = record.search(".//material").content if record.search(".//material")
+  	db[:transcription] = record.search(".//transcription/text").content if record.search(".//transcription/text")
+  	db[:description] = record.search(".//description").content if record.search(".//description")
 
 
 		return db
