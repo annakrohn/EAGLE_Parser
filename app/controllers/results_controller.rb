@@ -10,7 +10,6 @@ class ResultsController < ApplicationController
 
 
 	def create
-		debugger
 		@result = Result.eagle_search(results_params) 
 
 	end
