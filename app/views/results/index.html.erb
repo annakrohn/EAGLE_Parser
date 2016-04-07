@@ -1,1 +1,30 @@
-Woo
+<h1><%= "#{@count} for search # #{@term_id}" %> </h1>
+
+<div class='index_results'>
+	<table>
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Entity Type</th>
+				<th>Find Roman Provence</th> 
+				<th>Find Modern Spot</th> 
+				<th>Object Type</th>
+				<th>Transcription</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @results.each do |result| %>
+				<tr>
+					<th><%= result.title %></th>
+					<th><%= result.entityType %></th>
+					<th><%= result.findRomanProvence %></th> 
+					<th><%= result.findModernSpot %></th> 
+					<th><%= result.objectType %></th>
+					<th><%= result.transcription %></th>
+					<th><%= result.description %></th>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

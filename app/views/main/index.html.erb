@@ -14,4 +14,26 @@
 <% end %>
 
 <h2>Previous Searches</h2>
+<div class="terms_table">
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Search Terms</th>
+				<th>Time Searched</th>
+				<th>View</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @terms.each do |term| %>
+				<tr>
+					<td><%= term.id %></td>
+					<td><%= term.query_terms %></td>
+					<td><%= term.created_at %></td>
+					<td><%= link_to 'Show', results_path(term.id) %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
 
