@@ -13,8 +13,6 @@ class ResultsController < ApplicationController
 
 
 	def create
-		#need to figure out how to do this asynch, is timing out and loading the page, 
-		#thus killing the mysql saves
 		@terms_id = Result.eagle_search(results_params) 
 	end
 

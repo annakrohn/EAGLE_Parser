@@ -32,16 +32,16 @@ ActiveRecord::Schema.define(version: 20160329004952) do
     t.string   "inscriptionType"
     t.string   "objectType"
     t.string   "material"
-    t.text     "transcription"
+    t.text     "transcription", :limit => 2147483647
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "description"
+    t.text     "description", :limit => 2147483647
   end
 
   add_index "results", ["queryTerms"], name: "query_key_idx", using: :btree
 
   create_table "terms", force: true do |t|
-    t.string   "query_terms"
+    t.text   "query_terms"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

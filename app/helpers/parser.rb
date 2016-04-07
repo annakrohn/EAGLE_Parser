@@ -39,9 +39,7 @@ module Parser
 
   def get_result(query)
     search_url = "http://search.eagle.research-infrastructures.eu/solr/EMF-index-cleaned/select?group=true&group.field=tmid&start=0&rows=10000&fl=*&q=(#{query})"
-    
-#!!!!Second run of the get doesn't return any data, just bounces back the search params
-#!!!!am I doing solr wrong?  Or is it trying to resend/redo this part on the second record
+
     response = @agent.get(search_url)
 
     #if arr[@name='groups'] has inner_text, then it has returned values

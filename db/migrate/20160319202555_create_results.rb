@@ -19,7 +19,7 @@ class CreateResults < ActiveRecord::Migration
       t.string :inscriptionType
       t.string :objectType
       t.string :material
-      t.text :transcription
+      t.text :transcription, :limit => 2147483647
       t.timestamps
     end
   end
