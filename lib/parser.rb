@@ -65,8 +65,9 @@ module Parser
       #take care of query terms seperately (own table)
 
       db = Hash.new
-      db[:title] = xml.search(".//title").inner_text 
-      db[:entityType] = xml.search(".//entityType").inner_text
+      db[:title] = xml.search(".//title").inner_text.strip 
+      db[:title] = xml.search(".//artifactTitle").inner_text.strip if db[:title] == ""
+      db[:entityType] = xml.search(".//entityType").inner_text.strip
       
       source_info = xml.search(".//recordSourceInfo")
 
@@ -78,7 +79,7 @@ module Parser
         db[:sourceUrl] = ""
       end
       
-      db[:tmId] = xml.search(".//tmId").inner_text 
+      db[:tmId] = xml.search(".//tmId").inner_text.strip 
 
       date_info = xml.search(".//originDating")
       unless date_info.empty?
@@ -91,30 +92,30 @@ module Parser
         db[:period] = ""
     	end
 
-    	db[:findRomanProvence] = xml.search(".//romanProvinceItalicRegion").inner_text 
-    	db[:findAncientSpot] = xml.search(".//ancientFindSpot").inner_text 
-    	db[:findModernSpot] = xml.search(".//modernFindSpot").inner_text 
-    	db[:findModernCountry] = xml.search(".//modernCountry").inner_text 
-    	db[:findModernRegion] = xml.search(".//modernRegion").inner_text 
-    	db[:findModerProvence] = xml.search(".//modernProvence").inner_text 
+    	db[:findRomanProvence] = xml.search(".//romanProvinceItalicRegion").inner_text.strip 
+    	db[:findAncientSpot] = xml.search(".//ancientFindSpot").inner_text.strip 
+    	db[:findModernSpot] = xml.search(".//modernFindSpot").inner_text.strip 
+    	db[:findModernCountry] = xml.search(".//modernCountry").inner_text.strip 
+    	db[:findModernRegion] = xml.search(".//modernRegion").inner_text.strip 
+    	db[:findModerProvence] = xml.search(".//modernProvence").inner_text.strip 
 
       #keep an eye on this, could go funky if search is empty
     	i_types = []
     	xml.search(".//inscriptionType").each do |type|
-    		i_types << type.inner_text
+    		i_types << type.inner_text.strip
     	end
     	db[:inscriptionType] = i_types.join(';')
-    	db[:objectType] = xml.search(".//objectType").inner_text 
-    	db[:material] = xml.search(".//material").inner_text 
+    	db[:objectType] = xml.search(".//objectType").inner_text.strip 
+    	db[:material] = xml.search(".//material").inner_text.strip 
       #multiple possibilities for the transcriptions
       transcription = xml.search(".//hasTranscription/text")
       if transcription.empty?
-        db[:transcription] = xml.search(".//transcription/text").inner_text 
+        db[:transcription] = xml.search(".//transcription/text").inner_text.strip 
       else
-        db[:transcription] = transcription.inner_text
+        db[:transcription] = transcription.inner_text.strip
       end
       
-    	db[:description] = xml.search(".//description").inner_text 
+    	db[:description] = xml.search(".//description").inner_text.strip 
 
 
   		return db
