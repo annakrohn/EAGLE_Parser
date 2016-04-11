@@ -1,0 +1,68 @@
+<div class="row">
+	<ul class="nav nav-tabs" id='tabs'>
+	  <li class="nav-item">
+	    <a class="nav-link active" href="#term" data-toggle="tab">By Term</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" href="#geography" data-toggle="tab">By Geography</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" href="#item" data-toggle="tab">By Item Type</a>
+	  </li>
+	</ul>
+</div>
+<div class='row'>
+	<div class='tab-content'>
+		<div class='tab-pane active' id='term' role='tabpanel'>
+			<div id="accordion" role="tablist" aria-multiselectable="true">
+				<% num = 1 %>
+				<% @analysis.each do |search| %>
+					
+						<% term = search[:term_id] %>
+						<% arr = search[:arr] %>
+						
+					<div class="panel panel-default">
+				    <div class="panel-heading" role="tab" id='heading<%= num.to_s %>'>
+				      <h4 class="panel-title">
+				        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= num.to_s %>" aria-expanded="false" aria-controls="collapse<%= num.to_s %>">
+				          <%= "For term #{term} there were #{arr.count}" %>
+				        </a>
+				      </h4>
+				    </div>
+				    <div id="collapse<%= num.to_s %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%= num.to_s %>">
+					
+							<div class='index_results'>
+								<table class="table">
+									<thead>
+										<tr>
+											<th>Title</th>
+											<th>Transcription</th>
+											<th>Description</th>
+										</tr>
+									</thead>
+									<tbody>
+										<% arr.each do |result| %>
+											<tr>
+												<th><%= result.title %></th>
+												<th><%= result.transcription %></th>
+												<th><%= result.description %></th>
+											</tr>
+										<% end %>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<% num += 1 %>
+				<% end %>
+			</div>
+		</div>
+		<div class='tab-pane' id='geography' role='tabpanel'>
+			wheeeee
+		</div>
+
+		<div class='tab-pane' id='item' role='tabpanel'>
+			woooooo
+		</div>
+	</div>
+</div>
