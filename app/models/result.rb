@@ -1,6 +1,7 @@
 class Result < ActiveRecord::Base
 	belongs_to :term
 	extend Parser
+	include Report
 
 	#stores all of the information retrieved from the EAGLE API
   
@@ -15,6 +16,19 @@ class Result < ActiveRecord::Base
 			end
 		end
 		return query.id
+	end
+
+	def self.analysis(params)
+		query_id = params[:id]
+		query = Term.where(id: query_id).first
+		q_parts = query.query_terms.split(/\sOR\s/)
+		collector = []
+		q_parts.each do |term|
+			arr = Result.select(:title, :transcription, :description).where("title rlike :t or transcription rlike :t or description rlike :t", {t: term})
+			hsh = {term_id: term, arr: arr}
+			collector << hsh
+		end
+		return collector
 	end
 
 end

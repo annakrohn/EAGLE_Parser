@@ -42,8 +42,10 @@ end
 # gem 'capistrano', group: :development
 
 # Use debugger
- gem 'debugger', group: [:development, :test]
+gem 'debugger', group: [:development, :test]
 
- gem 'nokogiri'
+gem 'nokogiri'
 
- gem 'mechanize'
+gem 'mechanize'
+
+gem 'bootstrap', '~> 4.0.0.alpha3'

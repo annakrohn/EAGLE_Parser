@@ -15,7 +15,7 @@
 
 <h2>Previous Searches</h2>
 <div class="terms_table">
-	<table>
+	<table class="table">
 		<thead>
 			<tr>
 				<th>ID</th>
@@ -30,7 +30,7 @@
 					<td><%= term.id %></td>
 					<td><%= term.query_terms %></td>
 					<td><%= term.created_at %></td>
-					<td><%= link_to 'Show', results_path(term.id) %></td>
+					<td><%= link_to 'Show', results_path(:term_id => term.id) %></td>
 				</tr>
 			<% end %>
 		</tbody>

@@ -1,7 +1,7 @@
 class ResultsController < ApplicationController
 	#controlling searches and displaying results
 	def index
-		@term_id = params["format"]
+		@term_id = params[:term_id]
 		@results = Result.where(queryTerms: @term_id)
 		@count = Result.where(queryTerms: @term_id).count
 		return @count, @term_id
@@ -16,8 +16,12 @@ class ResultsController < ApplicationController
 		@terms_id = Result.eagle_search(results_params) 
 	end
 
+	def analysis
+		@analysis = Result.analysis(results_params)
+	end
+
 	private
 	  def results_params
-	    params.require(:results).permit(:search_terms)
+	    params.permit(:results, :search_terms, :id)
 	  end
 end

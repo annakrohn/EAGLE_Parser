@@ -1,7 +1,13 @@
 EagleParse::Application.routes.draw do
   get "main/index"
   root 'main#index'
-  resources :results
+  resources :results do
+    member do
+      get 'analysis'
+    end
+  end
+
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

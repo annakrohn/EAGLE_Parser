@@ -1,7 +1,7 @@
 <h1><%= "#{@count} for search # #{@term_id}" %> </h1>
-
+<%= link_to "Go to Analysis", analysis_result_path(@term_id) %>
 <div class='index_results'>
-	<table>
+	<table class="table">
 		<thead>
 			<tr>
 				<th>Title</th>
