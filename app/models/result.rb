@@ -1,13 +1,15 @@
 class Result < ActiveRecord::Base
 	belongs_to :term
+	belongs_to :place
 	extend Parser
 	include Report
 
 	#stores all of the information retrieved from the EAGLE API
   
 	def self.eagle_search(params)
-		query = Term.create(query_terms: params[:search_terms])
-		results, res_text = Result.get_and_parse(params[:search_terms])
+		search = params[:results][:search_terms]
+		query = Term.create(query_terms: search)
+		results, res_text = Result.get_and_parse(search)
 		unless results.empty?
 			results.each do |result|
 				res = Result.create(result)
@@ -15,6 +17,7 @@ class Result < ActiveRecord::Base
 				res.save
 			end
 		end
+		#trigger rake for places
 		return query.id
 	end
 
@@ -24,11 +27,15 @@ class Result < ActiveRecord::Base
 		q_parts = query.query_terms.split(/\sOR\s/)
 		collector = []
 		q_parts.each do |term|
-			arr = Result.select(:title, :transcription, :description).where("title rlike :t or transcription rlike :t or description rlike :t", {t: term})
+			arr = Result.select(:title, :inscriptionType, :transcription, :description).where("title rlike :t or inscriptionType rlike :t or transcription rlike :t or description rlike :t", {t: term})
 			hsh = {term_id: term, arr: arr}
 			collector << hsh
 		end
-		return collector
+		sorted = collector.sort{|x, y| y[:arr].count <=> x[:arr].count}
+		return sorted
 	end
+
+	#For places favor in this order: 10 findAncientSpot, 11 findModernSpot, 12 findModernCountry,
+      #13 findModernRegion, 14 findModerProvence 9 findRomanProvence, 
 
 end

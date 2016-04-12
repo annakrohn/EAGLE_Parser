@@ -38,7 +38,7 @@ module Parser
 	end
 
   def get_result(query)
-    search_url = "http://search.eagle.research-infrastructures.eu/solr/EMF-index-cleaned/select?group=true&group.field=tmid&start=0&rows=10000&fl=*&q=(#{query})"
+    search_url = "http://search.eagle.research-infrastructures.eu/solr/EMF-index-cleaned/select?group=true&group.field=tmid&start=0&rows=300&fl=*&q=(#{query})"
 
     response = @agent.get(search_url)
 
@@ -60,7 +60,7 @@ module Parser
   		#pull out everything needed for db
   		#0 queryTerms, 1 title, 2 entityType, 3 source, 4 sourceUrl, 5 tmId, 6 notBeforeDate, 7 notAfterDate,
       #8 period, 9 findRomanProvence, 10 findAncientSpot, 11 findModernSpot, 12 findModernCountry,
-      #13 findModernRegion, 14 findModerProvence, 15 inscriptionType, 16 objectType, 17 material, 18 transcription, 19 description
+      #13 findModernRegion, 14 findModernProvence, 15 inscriptionType, 16 objectType, 17 material, 18 transcription, 19 description
       
       #take care of query terms seperately (own table)
 
@@ -92,12 +92,12 @@ module Parser
         db[:period] = ""
     	end
 
-    	db[:findRomanProvence] = xml.search(".//romanProvinceItalicRegion").inner_text.strip 
-    	db[:findAncientSpot] = xml.search(".//ancientFindSpot").inner_text.strip 
-    	db[:findModernSpot] = xml.search(".//modernFindSpot").inner_text.strip 
-    	db[:findModernCountry] = xml.search(".//modernCountry").inner_text.strip 
-    	db[:findModernRegion] = xml.search(".//modernRegion").inner_text.strip 
-    	db[:findModerProvence] = xml.search(".//modernProvence").inner_text.strip 
+    	db[:findRomanProvence] = add_places(xml.search(".//romanProvinceItalicRegion").inner_text.strip, false) 
+    	db[:findAncientSpot] = add_places(xml.search(".//ancientFindSpot").inner_text.strip, false) 
+    	db[:findModernSpot] = add_places(xml.search(".//modernFindSpot").inner_text.strip, true) 
+    	db[:findModernCountry] = add_places(xml.search(".//modernCountry").inner_text.strip, true) 
+    	db[:findModernRegion] = add_places(xml.search(".//modernRegion").inner_text.strip, true)
+    	db[:findModernProvence] = add_places(xml.search(".//modernProvence").inner_text.strip, true) 
 
       #keep an eye on this, could go funky if search is empty
     	i_types = []
@@ -124,6 +124,20 @@ module Parser
       puts e.backtrace
     end  
 	end
+
+
+  def add_places(raw_string, modern_bool)
+    unless raw_string == "" || raw_string == nil
+      already_there = Place.find_by(name: raw_string)
+      unless already_there
+        new_place = Place.create(name: raw_string, modern: modern_bool)
+        p_index = new_place.id
+      end
+    else
+      p_index = nil
+    end
+    return p_index
+  end
 
 
 	def set_agent(a_alias = 'Mac Safari')

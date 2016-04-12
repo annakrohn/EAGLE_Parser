@@ -22,6 +22,6 @@ class ResultsController < ApplicationController
 
 	private
 	  def results_params
-	    params.permit(:results, :search_terms, :id)
+	    params.permit(:search_terms, :id, :utf8, :authenticity_token, :commit, results: [:search_terms] )
 	  end
 end

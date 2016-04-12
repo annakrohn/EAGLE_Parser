@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160329004952) do
+ActiveRecord::Schema.define(version: 20160412022928) do
+
+  create_table "places", force: true do |t|
+    t.string   "name"
+    t.string   "lat"
+    t.string   "long"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "modern"
+  end
 
   create_table "results", force: true do |t|
     t.integer  "queryTerms"
@@ -23,25 +32,31 @@ ActiveRecord::Schema.define(version: 20160329004952) do
     t.integer  "notBeforeDate"
     t.integer  "notAfterDate"
     t.string   "period"
-    t.string   "findRomanProvence"
-    t.string   "findAncientSpot"
-    t.string   "findModernSpot"
-    t.string   "findModernCountry"
-    t.string   "findModernRegion"
-    t.string   "findModerProvence"
+    t.integer  "findRomanProvence"
+    t.integer  "findAncientSpot"
+    t.integer  "findModernSpot"
+    t.integer  "findModernCountry"
+    t.integer  "findModernRegion"
+    t.integer  "findModernProvence"
     t.string   "inscriptionType"
     t.string   "objectType"
     t.string   "material"
-    t.text     "transcription", :limit => 2147483647
+    t.text     "transcription",      limit: 2147483647
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "description", :limit => 2147483647
+    t.text     "description",        limit: 2147483647
   end
 
+  add_index "results", ["findAncientSpot"], name: "a_spot_idx", using: :btree
+  add_index "results", ["findModernCountry"], name: "m_country_idx", using: :btree
+  add_index "results", ["findModernProvence"], name: "m_provence_idx", using: :btree
+  add_index "results", ["findModernRegion"], name: "m_region_idx", using: :btree
+  add_index "results", ["findModernSpot"], name: "m_spot_idx", using: :btree
+  add_index "results", ["findRomanProvence"], name: "r_prov_idx", using: :btree
   add_index "results", ["queryTerms"], name: "query_key_idx", using: :btree
 
   create_table "terms", force: true do |t|
-    t.text   "query_terms"
+    t.text     "query_terms"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

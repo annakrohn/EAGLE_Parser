@@ -15,7 +15,7 @@ class CreateResults < ActiveRecord::Migration
       t.string :findModernSpot
       t.string :findModernCountry
       t.string :findModernRegion
-      t.string :findModerProvence
+      t.string :findModernProvence
       t.string :inscriptionType
       t.string :objectType
       t.string :material
