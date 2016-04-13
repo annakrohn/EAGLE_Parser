@@ -3,6 +3,7 @@ class Result < ActiveRecord::Base
 	belongs_to :place
 	extend Parser
 	include Report
+	require 'rake'
 
 	#stores all of the information retrieved from the EAGLE API
   
@@ -18,6 +19,7 @@ class Result < ActiveRecord::Base
 			end
 		end
 		#trigger rake for places
+		Rake::Task["get_coords"].execute
 		return query.id
 	end
 
@@ -26,16 +28,28 @@ class Result < ActiveRecord::Base
 		query = Term.where(id: query_id).first
 		q_parts = query.query_terms.split(/\sOR\s/)
 		collector = []
+		rev_objs = {}
+		search = "title rlike :t or inscriptionType rlike :t or transcription rlike :t or description rlike :t or cleanTranscription rlike :t"
 		q_parts.each do |term|
-			arr = Result.select(:title, :inscriptionType, :transcription, :description).where("title rlike :t or inscriptionType rlike :t or transcription rlike :t or description rlike :t", {t: term})
-			hsh = {term_id: term, arr: arr}
+			arr = Result.select(:title, :inscriptionType, :transcription, :description).where(search, {t: term})
+			obj_types = Result.where(search, {t: term}).group(:objectType).count
+			obj_types.each do |key, value|
+				unless value == 0
+					key = "[blank]" if key == ""
+					if rev_objs.key?(key)
+						rev_objs[key] << [term, value]
+					else
+						rev_objs[key] = [[term, value]]
+					end
+				end
+			end
+			hsh = {term_id: term, arr: arr, obj_types: obj_types}
 			collector << hsh
 		end
 		sorted = collector.sort{|x, y| y[:arr].count <=> x[:arr].count}
-		return sorted
+		sorted_rev_objs = Hash[rev_objs.sort]
+		return sorted, sorted_rev_objs
 	end
 
-	#For places favor in this order: 10 findAncientSpot, 11 findModernSpot, 12 findModernCountry,
-      #13 findModernRegion, 14 findModerProvence 9 findRomanProvence, 
 
 end

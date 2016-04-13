@@ -111,8 +111,10 @@ module Parser
       transcription = xml.search(".//hasTranscription/text")
       if transcription.empty?
         db[:transcription] = xml.search(".//transcription/text").inner_text.strip 
+        db[:cleanTranscription] = xml.search(".//transcription/text").inner_text.strip.gsub(/\(|\)/, "")
       else
         db[:transcription] = transcription.inner_text.strip
+        db[:cleanTranscription] = transcription.inner_text.strip.gsub(/\(|\)/, "")
       end
       
     	db[:description] = xml.search(".//description").inner_text.strip 

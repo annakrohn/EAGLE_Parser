@@ -17,7 +17,7 @@ class ResultsController < ApplicationController
 	end
 
 	def analysis
-		@analysis = Result.analysis(results_params)
+		@analysis, @item_sort = Result.analysis(results_params)
 	end
 
 	private

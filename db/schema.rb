@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160412022928) do
+ActiveRecord::Schema.define(version: 20160412033430) do
 
   create_table "places", force: true do |t|
     t.string   "name"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20160412022928) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "description",        limit: 2147483647
+    t.text     "cleanTranscription", limit: 2147483647
   end
 
   add_index "results", ["findAncientSpot"], name: "a_spot_idx", using: :btree

@@ -7,13 +7,17 @@
 	    <a class="nav-link" href="#geography" data-toggle="tab">By Geography</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="#item" data-toggle="tab">By Item Type</a>
+	    <a class="nav-link" href="#item" data-toggle="tab">Object Types by Term</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" href="#term_by_object" data-toggle="tab">Terms by Object Types</a>
 	  </li>
 	</ul>
 </div>
 <div class='row'>
 	<div class='tab-content'>
 		<div class='tab-pane active' id='term' role='tabpanel'>
+			<p>**NB** Records will appear in multiple lists if the record contains two or more terms.</p>
 			<div id="accordion" role="tablist" aria-multiselectable="true">
 				<% num = 1 %>
 				<% @analysis.each do |search| %>
@@ -25,7 +29,7 @@
 				    <div class="panel-heading" role="tab" id='heading<%= num.to_s %>'>
 				      <h4 class="panel-title">
 				        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse<%= num.to_s %>" aria-expanded="false" aria-controls="collapse<%= num.to_s %>">
-				          <%= "For term #{term} there were #{arr.count}" %>
+				          <%= "For term #{term} there were #{arr.count} results" %>
 				        </a>
 				      </h4>
 				    </div>
@@ -58,11 +62,79 @@
 			</div>
 		</div>
 		<div class='tab-pane' id='geography' role='tabpanel'>
-			wheeeee
+			<div class='row'>
+				<div id="map" style='width:500px; height:400px'></div>
+				<%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{GOOGLE_BROWSER}&callback=initMap" %>
+			</div>
 		</div>
 
 		<div class='tab-pane' id='item' role='tabpanel'>
-			woooooo
+			<div id="t_accordion" role="tablist" aria-multiselectable="true">
+				<% num = 1 %>
+				<% @analysis.each do |search| %>
+					
+						<% term = search[:term_id] %>
+						<% objs = search[:obj_types] %>
+						
+					<div class="panel panel-default">
+				    <div class="panel-heading" role="tab" id='t_heading<%= num.to_s %>'>
+				      <h4 class="panel-title">
+				        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#t_collapse<%= num.to_s %>" aria-expanded="false" aria-controls="t_collapse<%= num.to_s %>">
+				          <%= "#{term} appeared on #{objs.count} object types" %>
+				        </a>
+				      </h4>
+				    </div>
+				    <div id="t_collapse<%= num.to_s %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="t_heading<%= num.to_s %>">
+					
+							<div class='index_results'>
+								<table class="table">
+									<thead>
+										<tr>
+											<th>Object Type</th>
+											<th>Count</th>
+										</tr>
+									</thead>
+									<tbody>
+										<% objs.each do |key, value| %>
+
+											<% key = "[blank]" if key == "" %>
+											<tr>
+												<th><%= key %></th>
+												<th><%= value %></th>
+											</tr>
+										<% end %>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<% num += 1 %>
+				<% end %>
+			</div>
+		</div>
+		<div class='tab-pane' id='term_by_object' role='tabpanel'>
+			<div class="obj_table">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Object Type</th>
+							<th>Search Term</th>
+							<th>Number</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% @item_sort.each do |key, value| %>
+							<tr>
+								<td><%= key %></td>
+								<% value.each do |term_arr| %>
+									<td><%= term_arr[0] %></td>
+									<td><%= term_arr[1] %></td>
+								<%end%>
+							</tr>
+						<% end %>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>

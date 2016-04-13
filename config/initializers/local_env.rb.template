@@ -4,3 +4,4 @@
 # Each entry gets set as a local environment variable.
 
 GOOGLE_GEO_API = [API KEY]
+BASE_DIR = File.dirname(Dir.pwd)
