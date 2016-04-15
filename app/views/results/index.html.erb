@@ -1,30 +1,35 @@
 <h1><%= "#{@count} for search # #{@term_id}" %> </h1>
-<%= link_to "Go to Analysis", analysis_result_path(@term_id) %>
-<div class='index_results'>
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Title</th>
-				<th>Entity Type</th>
-				<th>Find Ancient Spot</th> 
-				<th>Find Modern Spot</th> 
-				<th>Object Type</th>
-				<th>Transcription</th>
-				<th>Description</th>
-			</tr>
-		</thead>
-		<tbody>
-			<% @results.each do |result| %>
+<div class="row"> <%= link_to "Go to Analysis", analysis_result_path(@term_id) %> </div>
+<div class="row"><%= link_to "Go to Main Page", root_path %></div>
+<div class="row">
+	<div class='index_results'>
+		<table class="table">
+			<thead>
 				<tr>
-					<th><%= result.title %></th>
-					<th><%= result.entityType %></th>
-					<th><%= result.findAncientSpot %></th> 
-					<th><%= result.findModernSpot %></th> 
-					<th><%= result.objectType %></th>
-					<th><%= result.transcription %></th>
-					<th><%= result.description %></th>
+					<th>Title</th>
+					<th>Entity Type</th>
+					<th>Find Ancient Spot</th> 
+					<th>Find Modern Spot</th> 
+					<th>Object Type</th>
+					<th>Transcription</th>
+					<th>Description</th>
+					<th>Source Record</th>
 				</tr>
-			<% end %>
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				<% @results.each do |result| %>
+					<tr>
+						<th><%= result.title %></th>
+						<th><%= result.entityType %></th>
+						<th><%= result.findAncientSpot %></th> 
+						<th><%= result.findModernSpot %></th> 
+						<th><%= result.objectType %></th>
+						<th><%= result.transcription %></th>
+						<th><%= result.description %></th>
+						<th><%= link_to "Go", result.sourceUrl %></th>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
 </div>

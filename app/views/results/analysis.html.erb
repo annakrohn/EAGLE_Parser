@@ -1,4 +1,11 @@
 <div class="row">
+	<%= link_to "Go to Result List", result_path(:term_id => @analysis[0][:term_id]) %>
+</div>
+<div class="row">
+	<%= link_to "Go to Main Page", root_path %>
+</div>
+
+<div class="row">
 	<ul class="nav nav-tabs" id='tabs'>
 	  <li class="nav-item">
 	    <a class="nav-link active" href="#term" data-toggle="tab">By Term</a>
@@ -42,6 +49,10 @@
 											<th>Title</th>
 											<th>Transcription</th>
 											<th>Description</th>
+											<th>Not Before</th>
+											<th>Not After</th>
+											<th>Period</th>
+											<th>Source Record</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -50,6 +61,10 @@
 												<th><%= result.title %></th>
 												<th><%= result.transcription %></th>
 												<th><%= result.description %></th>
+												<th><%= result.notBeforeDate %></th>
+												<th><%= result.notAfterDate %></th>
+												<th><%= result.period %></th>
+												<th><%= link_to "Go", result.sourceUrl %></th>
 											</tr>
 										<% end %>
 									</tbody>
@@ -61,10 +76,10 @@
 				<% end %>
 			</div>
 		</div>
+	<!-- This is just a static map of mainly search 2 data, need to actually make a dynamic map...-->
 		<div class='tab-pane' id='geography' role='tabpanel'>
 			<div class='row'>
-				<div id="map" style='width:500px; height:400px'></div>
-				<%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=#{GOOGLE_BROWSER}&callback=initMap" %>
+				<iframe src="https://www.google.com/maps/d/u/0/embed?mid=zsXBcLY-iMH8.kjgdqYNHVteQ" width="640" height="480"></iframe>
 			</div>
 		</div>
 
@@ -112,6 +127,7 @@
 				<% end %>
 			</div>
 		</div>
+		
 		<div class='tab-pane' id='term_by_object' role='tabpanel'>
 			<div class="obj_table">
 				<table class="table">
@@ -136,5 +152,32 @@
 				</table>
 			</div>
 		</div>
+<!--
+		<div class='tab-pane' id='tags' role='tabpanel'>
+			<div class="tag_table">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Object Type</th>
+							<th>Search Term</th>
+							<th>Number</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+						<%#@tags.each do |key, value| %>
+							<tr>
+								<td><%#key %></td>
+								<%#value.each do |term_arr| %>
+									<td><%#term_arr[0] %></td>
+									<td><%#term_arr[1] %></td>
+								<%#end%>
+							</tr>
+						<%#end %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+-->
 	</div>
 </div>

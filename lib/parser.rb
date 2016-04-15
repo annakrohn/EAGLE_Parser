@@ -38,7 +38,7 @@ module Parser
 	end
 
   def get_result(query)
-    search_url = "http://search.eagle.research-infrastructures.eu/solr/EMF-index-cleaned/select?group=true&group.field=tmid&start=0&rows=300&fl=*&q=(#{query})"
+    search_url = "http://search.eagle.research-infrastructures.eu/solr/EMF-index-cleaned/select?group=true&group.field=tmid&start=0&rows=2000&fl=*&q=(#{query})"
 
     response = @agent.get(search_url)
 
@@ -134,6 +134,8 @@ module Parser
       unless already_there
         new_place = Place.create(name: raw_string, modern: modern_bool)
         p_index = new_place.id
+      else
+        p_index = already_there.id
       end
     else
       p_index = nil

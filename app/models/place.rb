@@ -38,7 +38,7 @@ class Place < ActiveRecord::Base
 
 
 	def self.google_geocode_search(p_name)
-		url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{p_name}&key=#{ENV[GOOGLE_GEO_API]}"
+		url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{p_name}&key=#{GOOGLE_GEO_API}"
 		#use "location" field
 		
     res = @agent.get(url)
@@ -68,7 +68,8 @@ class Place < ActiveRecord::Base
 		coord = []
 		matches.each do |match|
 			arr = match.split(',')
-			if arr[2] == p_name || arr[1] =~ /\b#{p_name}\b/i
+			debugger if p_name == "Germania inferior"
+			if arr[2] == p_name || arr[1] =~ /\b#{p_name.gsub(' ', '')}\b/i
 				#probably not the best way to do this, but we're going with it
 				unless arr[5] == '' 
 					#if there is a latitude and longitude, grab and go
@@ -76,6 +77,16 @@ class Place < ActiveRecord::Base
 					coord << arr[6].strip
 					coord << arr[5]
 					break
+				else
+					#use geonames service if no lat and long provided
+					gn_id = arr[4]
+					unless gn_id == ''
+						gn_url = "http://api.geonames.org/get?geonameId=#{gn_id}&username=#{GN_UN}"
+						res = @agent.get(gn_url)
+						coord << res.search(".//lat").inner_text
+						coord << res.search(".//lng").inner_text
+						break
+					end
 				end
 			end
 		end

@@ -3,5 +3,11 @@
 # This file should be listed in .gitignore to keep your settings secret!
 # Each entry gets set as a local environment variable.
 
+#Google geocoding key
 GOOGLE_GEO_API = [API KEY]
+#Google browser key for map js
+GOOGLE_BROWSER = [KEY]
+#username for Geonames api
+GN_UN = [UN]
+#set the base directory
 BASE_DIR = File.dirname(Dir.pwd)
