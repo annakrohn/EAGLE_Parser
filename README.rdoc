@@ -5,14 +5,14 @@ EAGLE Parser is an analysis platform geared toward large, multi-term queries of 
 It performs a query using EAGLE's API, parses the resulting XML into a MySQL database, and then manipulates the data from there. Geographic coordinates are obtained either from the Pleiades Plus CSV dump (https://github.com/ryanfb/pleiades-plus) or the Google Maps Geocoding API (https://developers.google.com/maps/documentation/geocoding/intro?hl=en_US).
 
 Information currently provided:
-*Total record count
-*Record count by search term
-*Breakdown of objectTypes and the serch terms associated with them
+* Total record count
+* Record count by search term
+* Breakdown of objectTypes and the search terms associated with them
 
 
 Planned development:
-*Tagging of categories of objects
-*Find places missing from the EAGLE data but present in the source data
-*Automatic map generation
-*Collection of proper names that appear in the inscriptions
-*Customizable analysis
+* Tagging of categories of objects
+* Find places missing from the EAGLE data but present in the source data
+* Automatic map generation
+* Collection of proper names that appear in the inscriptions
+* Customizable analysis
